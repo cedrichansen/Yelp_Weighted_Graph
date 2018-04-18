@@ -11,6 +11,28 @@ public class Main {
             g.ht.add(new Node(y));
         }
 
+
+        /// code below just checks the distance stuff between 2 nodes
+        int index = 0;
+        int index2=0;
+        for (;index<g.ht.table.length; index++) {
+            if (g.ht.table[index] != null) {
+                break;
+            }
+        }
+        for (;index2<g.ht.table.length; index2++) {
+            if (g.ht.table[index2] != null && index != index2) {
+                break;
+            }
+        }
+        Node a = g.ht.table[index].get(0);
+        Node b = g.ht.table[index2].get(0);
+        System.out.println(a.getDistanceTo(b));
+        ////
+
+
+
+
         System.out.println("done adding stuff to ht");
 
     }

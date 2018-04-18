@@ -45,7 +45,11 @@ public class Node {
     }
 
 
-    static double getDistanceToOtherNope(double startLat, double startLong, double endLat, double endLong) {
+    double getDistanceTo(Node other){
+        return getDistanceToOtherNode(this.yd.lattitude, this.yd.longitude, other.yd.lattitude, other.yd.longitude);
+    }
+
+    static double getDistanceToOtherNode(double startLat, double startLong, double endLat, double endLong) {
         final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
 
 
@@ -61,7 +65,7 @@ public class Node {
         return EARTH_RADIUS * c; // <-- d
     }
 
-    public static double haversin(double val) {
+    static double haversin(double val) {
         return Math.pow(Math.sin(val / 2), 2);
     }
 
