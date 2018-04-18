@@ -6,14 +6,12 @@ public class Main {
         System.out.println("Hello world");
 
         ArrayList<YelpData> businesses = ReadJson.readFromJson(1000,"../business.json");
-        HashTable ht = new HashTable(16);
+        Graph g = new Graph();
         for (YelpData y:businesses){
-            ht.add(new Node(y));
+            g.ht.add(new Node(y));
         }
 
         System.out.println("done adding stuff to ht");
-
-
 
     }
 
