@@ -4,6 +4,8 @@ public class Node {
 
     YelpData yd;
     ArrayList<Edge> edges;
+    static int totalNumNodes = 0;
+    final int IDNumber;
 
     public static class Edge{
         Node dest;
@@ -22,6 +24,8 @@ public class Node {
 
     public Node (YelpData y) {
         yd = y;
+        IDNumber = ++totalNumNodes;
+
     }
 
     void addEdge(YelpData y) {
@@ -38,6 +42,11 @@ public class Node {
             nodes.add(e.dest);
         }
         return nodes;
+    }
+
+
+    public String toString(){
+        return yd.name + " <--> " + IDNumber;
     }
 
 
