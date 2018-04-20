@@ -27,7 +27,7 @@ public class Main {
         }
         Node a = g.ht.table[index].get(0);
         Node b = g.ht.table[index2].get(0);
-        System.out.println(a.getDistanceTo(b));
+        System.out.println("\nDistance from node A to B: "+ a.getDistanceTo(b) + "\n");
         ////
 
 

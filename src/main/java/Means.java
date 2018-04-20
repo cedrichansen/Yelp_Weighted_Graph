@@ -40,7 +40,7 @@ public class Means {
     ArrayList<Point> getCenters(){
         ArrayList<Point> centers = new ArrayList<Point>();
         for (Cluster c : clusters) {
-            Point p = new Point(c.center.lattitude, c.center.longitude);
+            Point p = new Point(c.center.yd);
             centers.add(p);
         }
         return centers;

@@ -5,15 +5,10 @@ public class Point {
     int cluster;
     YelpData yd;
 
-    public Point(double x, double y) {
-        longitude = x;
-        lattitude = y;
-    }
-
-    public Point (double x, double y, YelpData yd){
-        lattitude = x;
-        longitude = y;
-        this.yd = yd;
+    public Point(YelpData y){
+        lattitude = y.lattitude;
+        longitude = y.longitude;
+        yd = y;
     }
 
     public double getDistance(Point center){
