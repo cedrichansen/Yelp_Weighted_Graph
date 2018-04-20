@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Comparable{
 
     YelpData yd;
     ArrayList<Edge> edges;
     static int totalNumNodes = 0;
     final int IDNumber;
+    double haversin;
 
     public static class Edge{
         Node dest;
@@ -24,8 +25,13 @@ public class Node {
 
     public Node (YelpData y) {
         yd = y;
-        IDNumber = ++totalNumNodes;
+        IDNumber = totalNumNodes++;
+        haversin = Double.MAX_VALUE;
 
+    }
+
+    public int compareTo(Object other){
+        return (int)((Node)other).haversin;
     }
 
     void addEdge(YelpData y) {
@@ -46,7 +52,9 @@ public class Node {
 
 
     double getDistanceTo(Node other){
-        return getDistanceToOtherNode(this.yd.lattitude, this.yd.longitude, other.yd.lattitude, other.yd.longitude);
+        double distance = getDistanceToOtherNode(this.yd.lattitude, this.yd.longitude, other.yd.lattitude, other.yd.longitude);
+        other.haversin = distance;
+        return distance;
     }
 
     static double getDistanceToOtherNode(double startLat, double startLong, double endLat, double endLong) {
