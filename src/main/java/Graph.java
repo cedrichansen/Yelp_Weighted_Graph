@@ -52,7 +52,6 @@ public class Graph {
                 } else {
                     closest5[a] = this.nodes[a];
                 }
-
             }
 
             for(int j = 0; j<getNumberOfElements(); j++){
@@ -60,7 +59,7 @@ public class Graph {
                     current.getDistanceTo(this.nodes[j]);
                     Arrays.sort(closest5);
                     closest4 = removeLastElement(closest4, closest5);
-                    System.out.println("Getting Edges for elem: " + i + " --- Currently looking at elem. " + j);
+                    System.out.println("Getting Edges for elem: " + i + " --> Currently looking at elem. " + j);
                 }
             }
 

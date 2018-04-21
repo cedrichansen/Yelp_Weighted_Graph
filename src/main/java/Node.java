@@ -46,6 +46,7 @@ public class Node implements Comparable<Node> {
         }
     }
 
+    //Return an Arraylist of Nodes rather than Edges
     ArrayList<Node> getNeighbouringNodes(){
         ArrayList<Node> nodes = new ArrayList<Node>();
         for (Edge e: edges) {
@@ -55,6 +56,7 @@ public class Node implements Comparable<Node> {
     }
 
 
+    //use this function to call getDistanceToOther Node. A bit easier this way
     double getDistanceTo(Node other){
         double distance = getDistanceToOtherNode(this.yd.lattitude, this.yd.longitude, other.yd.lattitude, other.yd.longitude);
         other.haversin = distance;
@@ -84,7 +86,7 @@ public class Node implements Comparable<Node> {
 
 
     public String toString(){
-        return yd.name + " <--> " + IDNumber;
+        return "Name: "+ yd.name + " --> Id: " + IDNumber;
     }
 
 
