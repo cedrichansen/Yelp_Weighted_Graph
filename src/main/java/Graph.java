@@ -55,8 +55,10 @@ public class Graph {
             }
 
             for(int j = 0; j<getNumberOfElements(); j++){
-                if (i != j){
-                    current.getDistanceTo(this.nodes[j]);
+                Node otherNode = this.nodes[j];
+                if (i != j && !alreadyInClosest4(closest5, otherNode)){
+                    closest5[4] = otherNode;
+                    current.getDistanceTo(closest5[4]);
                     Arrays.sort(closest5);
                     closest4 = removeLastElement(closest4, closest5);
                     System.out.println("Getting Edges for elem: " + i + " --> Currently looking at elem. " + j);
@@ -74,6 +76,16 @@ public class Graph {
             small[i] = big[i];
         }
         return small;
+    }
+
+    public boolean alreadyInClosest4(Node [] n, Node d){
+
+        for (int i =0; i<n.length; i++){
+            if (n[i]== d){
+                return true;
+            }
+        }
+        return false;
     }
 
 

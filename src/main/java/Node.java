@@ -22,6 +22,10 @@ public class Node implements Comparable<Node> {
         public Edge(Node d){
             dest = d;
         }
+
+        public String toString(){
+            return "Dest Node:" + dest.toString() + " //////   Weight: " + weight;
+        }
     }
 
 
