@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 
-public class Node implements Comparable{
+public class Node implements Comparable<Node> {
 
     YelpData yd;
-    ArrayList<Edge> edges;
+    Edge[] edges;
     static int totalNumNodes = 0;
     final int IDNumber;
     double haversin;
+
+
 
     public static class Edge{
         Node dest;
@@ -27,19 +29,21 @@ public class Node implements Comparable{
         yd = y;
         IDNumber = totalNumNodes++;
         haversin = Double.MAX_VALUE;
+        edges = new Edge[4];
 
     }
 
-    public int compareTo(Object other){
-        return (int)((Node)other).haversin;
+    public int compareTo(Node other){
+        return (int)this.haversin - (int)other.haversin;
     }
 
-    void addEdge(YelpData y) {
-        this.edges.add(new Edge(new Node(y)));
-    }
+    void addEdge(Node n) {
 
-    boolean hasEdgeTo(YelpData y){
-        return this.edges.contains(new Edge(new Node(y)));
+        for (int i =0; i<edges.length; i++){
+            if (edges[i] != null){
+                edges[i] = new Edge(n, n.haversin);
+            }
+        }
     }
 
     ArrayList<Node> getNeighbouringNodes(){

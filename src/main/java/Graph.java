@@ -1,4 +1,7 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Graph {
     Node [] nodes;
@@ -9,9 +12,9 @@ public class Graph {
         nodes = new Node [200000];
     }
 
-    public boolean add(Node n, int i){
-        if (nodes[i]== null) {
-            nodes[i]=n;
+    public boolean add(Node n){
+        if (nodes[n.IDNumber]== null) {
+            nodes[n.IDNumber]=n;
             return true;
         }
         return false;
@@ -28,18 +31,50 @@ public class Graph {
     }
 
     public void AssignEdges(){
-        Node [] closest4 = new Node[4];
-        Node bad = new Node(null);
-
         for (int i = 0; i<getNumberOfElements(); i++) {
+
+            Node current = nodes[i];
+
+            //where the actual 4 best values will be stores
+            Node [] closest4 = new Node[4];
+
+            //The extra spot is there so when sorting, I can always chop out the worst element
+            //assign all 5 spots initially to first 5 elements
+            Node [] closest5 = new Node[5];
+            boolean match = false;
+            for (int a = 0; a<closest5.length; a++){
+                if (a==i){
+                    //basically just skip over duplicates
+                    match = true;
+                }
+                if (match){
+                    closest5[a] = this.nodes[a+1];
+                } else {
+                    closest5[a] = this.nodes[a];
+                }
+
+            }
+
             for(int j = 0; j<getNumberOfElements(); j++){
                 if (i != j){
-
+                    current.getDistanceTo(this.nodes[j]);
+                    Arrays.sort(closest5);
+                    closest4 = removeLastElement(closest4, closest5);
+                    System.out.println("Getting Edges for elem: " + i + " --- Currently looking at elem. " + j);
                 }
             }
+
+            for (int k=0; k<current.edges.length; k++){
+                current.edges[k] = new Node.Edge(closest4[k], closest4[k].haversin);
+            }
         }
+    }
 
-
+    public Node [] removeLastElement(Node [] small, Node [] big){
+        for (int i = 0; i<small.length; i++){
+            small[i] = big[i];
+        }
+        return small;
     }
 
 
