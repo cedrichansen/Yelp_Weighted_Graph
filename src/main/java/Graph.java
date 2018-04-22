@@ -167,6 +167,7 @@ public class Graph {
 
     public Node read(long location) throws IOException {
         try {
+            System.out.println("Reading Node: " + (int)location);
             Node n = new Node(null);
             RandomAccessFile file = new RandomAccessFile(NODE_FILE, "rw");
             file.seek(location * NODESIZE);
@@ -175,8 +176,7 @@ public class Graph {
             fc.read(bb);
             bb.flip();
 
-            int num = bb.getInt();
-            n.IDNumber = num;
+            n.IDNumber = bb.getInt();
 
             //read name for yelpdata
             int nameLen = bb.getInt();
@@ -232,6 +232,13 @@ public class Graph {
             return null;
         }
 
+    }
+
+
+    public void readAndCreateGraph() throws IOException{
+        for (int i=0; i<Main.NUM_BUSINESSES; i++){
+            this.nodes[i] = this.read((long)i);
+        }
     }
 
 
