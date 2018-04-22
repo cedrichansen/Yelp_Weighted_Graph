@@ -111,6 +111,8 @@ public class Graph {
 
             bb.putInt(n.IDNumber);
 
+            System.out.println("writing node: " + n.IDNumber);
+
             YelpData current = n.yd;
             //write the name of the current yelp object
             byte[] name = current.name.getBytes();
