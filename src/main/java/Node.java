@@ -5,7 +5,7 @@ public class Node implements Comparable<Node> {
     YelpData yd;
     Edge[] edges;
     static int totalNumNodes = 0;
-    final int IDNumber;
+    int IDNumber;
     double haversin;
 
 
