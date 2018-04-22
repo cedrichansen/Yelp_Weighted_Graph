@@ -5,7 +5,6 @@ public class Main {
 
     final static int NUM_BUSINESSES = 10000;
 
-
     public static void main(String[] args) {
 
 
@@ -13,6 +12,7 @@ public class Main {
             Graph g = new Graph();
             //assignEdgesAndWriteNodes(g, NUM_BUSINESSES);
             g.readAndCreateGraph();
+            Object [] neighbours = g.nodes[10].getNeighbouringNodes().toArray();
 
             System.out.println("\nGraph has been read!!!");
 

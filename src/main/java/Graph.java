@@ -33,6 +33,12 @@ public class Graph {
         return false;
     }
 
+
+    /*
+    *
+    * gets the number of Nodes actually in the graph
+    *
+     */
     public int getNumberOfElements() {
         int count = 0;
         for (int i = 0; i < nodes.length; i++) {
@@ -42,6 +48,14 @@ public class Graph {
         }
         return count;
     }
+
+
+
+    /*
+    *
+    * Goes through all nodes and looks to find the other 4 closest nodes and adds them as edges
+    *
+     */
 
     public void AssignEdges() {
         for (int i = 0; i < getNumberOfElements(); i++) {
@@ -78,6 +92,7 @@ public class Graph {
                 }
             }
 
+            // now that the closest 4 elements are known, add to list of edges
             for (int k = 0; k < current.edges.length; k++) {
                 current.edges[k] = new Node.Edge(closest4[k], closest4[k].haversin);
             }
@@ -165,7 +180,7 @@ public class Graph {
     }
 
 
-    public Node read(long location) throws IOException {
+    public static Node read(long location) throws IOException {
         try {
             System.out.println("Reading Node: " + (int)location);
             Node n = new Node(null);
@@ -237,7 +252,7 @@ public class Graph {
 
     public void readAndCreateGraph() throws IOException{
         for (int i=0; i<Main.NUM_BUSINESSES; i++){
-            this.nodes[i] = this.read((long)i);
+            this.nodes[i] = Graph.read((long)i);
         }
     }
 

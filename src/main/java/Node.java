@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Node implements Comparable<Node> {
@@ -51,10 +52,10 @@ public class Node implements Comparable<Node> {
     }
 
     //Return an Arraylist of Nodes rather than Edges
-    ArrayList<Node> getNeighbouringNodes(){
+    public ArrayList<Node> getNeighbouringNodes() throws IOException{
         ArrayList<Node> nodes = new ArrayList<Node>();
         for (Edge e: edges) {
-            nodes.add(e.dest);
+            nodes.add(Graph.read(e.dest.IDNumber));
         }
         return nodes;
     }
