@@ -1,6 +1,4 @@
-import javafx.scene.Parent;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Means {
