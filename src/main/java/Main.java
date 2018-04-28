@@ -12,9 +12,12 @@ public class Main {
             Graph g = new Graph();
             //assignEdgesAndWriteNodes(g, NUM_BUSINESSES);
             g.readAndCreateGraph();
+            g.writeAllEdgesFromLoadedGraph(NUM_BUSINESSES);
             Object [] neighbours = g.nodes[10].getNeighbouringNodes().toArray();
 
             System.out.println("\nGraph has been read!!!");
+
+
 
 
         } catch (IOException e) {
@@ -42,7 +45,30 @@ public class Main {
 
         for (int i = 0; i < NUM_BUSINESSES; i++) {
             g.write(g.nodes[i]);
+            g.writeEdges(g.nodes[i]);
         }
     }
+
+
+
+
+
+
+    public static ArrayList<Node> shortestPath (Node start, Node end) {
+
+        ArrayList<Node> path = new ArrayList<Node>();
+        ArrayList<Node> visited = new ArrayList<Node>();
+
+
+
+
+
+
+
+        return path;
+
+
+    }
+
 
 }

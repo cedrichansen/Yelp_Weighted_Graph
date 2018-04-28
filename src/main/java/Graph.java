@@ -19,7 +19,9 @@ public class Graph {
     Node start;
     Node end;
     final static String NODE_FILE = "Nodes";
+    final static String EDGE_FILE = "Edges";
     final static int NODESIZE = 512;
+    final static int EDGESIZE = 32;
 
     public Graph() {
         nodes = new Node[200000];
@@ -48,6 +50,10 @@ public class Graph {
         }
         return count;
     }
+
+
+
+
 
 
 
@@ -81,7 +87,7 @@ public class Graph {
                 }
             }
 
-            for (int j = 0; j < getNumberOfElements(); j++) {
+            for (int j = 0; j < getNumberOfElements() -1; j++) {
                 Node otherNode = this.nodes[j];
                 if (i != j && !alreadyInClosest4(closest5, otherNode)) {
                     closest5[4] = otherNode;
@@ -114,6 +120,34 @@ public class Graph {
             }
         }
         return false;
+    }
+
+    public void writeEdges(Node n) throws IOException{
+        System.out.println("writing edges for " + n.toString());
+
+        RandomAccessFile file = new RandomAccessFile(EDGE_FILE, "rw");
+        file.seek(n.IDNumber* EDGESIZE);
+        FileChannel fc = file.getChannel();
+        ByteBuffer bb = ByteBuffer.allocate(EDGESIZE);
+
+        bb.putInt(n.edges[0].dest.IDNumber);
+        bb.putInt(n.edges[1].dest.IDNumber);
+        bb.putInt(n.edges[2].dest.IDNumber);
+        bb.putInt(n.edges[3].dest.IDNumber);
+
+        bb.flip();
+        fc.write(bb);
+        bb.clear();
+        fc.close();
+        file.close();
+
+    }
+
+
+    public void writeAllEdgesFromLoadedGraph(int NUM_BUSINESSES) throws IOException{
+        for (int i = 0; i<NUM_BUSINESSES; i++){
+            this.writeEdges(this.nodes[i]);
+        }
     }
 
 
