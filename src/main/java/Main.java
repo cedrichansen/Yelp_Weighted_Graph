@@ -12,7 +12,7 @@ public class Main {
             Graph g = new Graph();
             //assignEdgesAndWriteNodes(g, NUM_BUSINESSES);
             g.readAndCreateGraph();
-            g.writeAllEdgesFromLoadedGraph(NUM_BUSINESSES);
+            //g.writeAllEdgesFromLoadedGraph(NUM_BUSINESSES);
             Object [] neighbours = g.nodes[10].getNeighbouringNodes().toArray();
 
             System.out.println("\nGraph has been read!!!");

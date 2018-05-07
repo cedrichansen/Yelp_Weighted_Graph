@@ -25,7 +25,7 @@ public class Node implements Comparable<Node> {
         }
 
         public String toString(){
-            return "Dest Node:" + dest.toString() + " //////   Weight: " + weight;
+            return "Dest Node ID:" + dest.IDNumber + " //////   Weight: " + weight;
         }
     }
 
