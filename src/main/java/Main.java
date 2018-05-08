@@ -16,13 +16,14 @@ public class Main {
             graph.recoverEdges();
 
 
-            graph.shortestPath(graph.nodes[6]);
+            graph.shortestPathFrom(graph.nodes[6]);
             Node n = graph.nodes[136];
             Node m = graph.nodes[1000];
-
-            graph.shortestPath(n);
-
+            graph.shortestPathFrom(n);
             m = graph.nodes[1000];
+
+            int numDisjoint = graph.numberOfDisjointSets(graph, 0);
+
 
 
             System.out.println("\nGraph has been read!!!");

@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -45,6 +47,16 @@ public class Graph {
             }
         }
         return count;
+    }
+
+    public int getIndexOfLastElement() {
+        int finalIndex = 0;
+        for (int i=0; i< nodes.length; i++){
+            if (nodes[i] != null){
+                finalIndex = i;
+            }
+        }
+        return finalIndex;
     }
 
 
@@ -129,7 +141,7 @@ public class Graph {
     }
 
 
-    public void shortestPath (Node start /*, Node end*/) throws IOException {
+    public void shortestPathFrom(Node start /*, Node end*/) throws IOException {
 
         clearPaths();
         PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
@@ -164,10 +176,39 @@ public class Graph {
         for (int i = 0; i<getNumberOfElements(); i++){
             if (this.nodes[i].path.size() != 0){
                 this.nodes[i].path.clear();
-
             }
         }
     }
+
+
+    public int numberOfDisjointSets(Graph g, int uniqueSets)throws IOException{
+        uniqueSets++;
+        Node first = getFirstNode();
+        if (first == null){
+            return uniqueSets;
+        }
+        shortestPathFrom(first);
+        Graph smaller = new Graph();
+        for (int i = 0; i<g.getIndexOfLastElement(); i++){
+            if (g.nodes[i].path.size()==0){
+                smaller.add(g.nodes[i]);
+            }
+        }
+        return numberOfDisjointSets(smaller, uniqueSets);
+
+    }
+
+    public Node getFirstNode(){
+        for (int i = 0; i<this.nodes.length; i++){
+            if (this.nodes!= null){
+                return this.nodes[i];
+            }
+        }
+        return null;
+    }
+
+
+
 
 
     public void writeEdges(Node n) throws IOException{
