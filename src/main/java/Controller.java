@@ -2,6 +2,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -56,6 +59,12 @@ public class Controller {
 
     @FXML
     TableColumn<YelpData, String> pathLongitude;
+
+
+    @FXML
+    ScatterChart<?,?> pathGraph;
+
+
 
 
 
@@ -151,9 +160,72 @@ public class Controller {
         System.out.println();
 
 
+        double[] bounds = findBounds(pathBusinesses);
 
 
 
+
+
+       // NumberAxis xBounds= new NumberAxis(bounds[0], bounds[1], 0.0001);
+        //NumberAxis yBounds = new NumberAxis(bounds[2], bounds[3], 0.0001);
+
+        //pathGraph = new ScatterChart<Number, Number>(new NumberAxis(bounds[0], bounds[1], 0.0001), new NumberAxis(bounds[2], bounds[3], 0.0001));
+
+        System.out.println();
+
+
+        XYChart.Series series = new XYChart.Series();
+
+        XYChart.Data [] points = new XYChart.Data [path.size()];
+
+        for (int i = 0; i<points.length; i++){
+            series.getData().add(new XYChart.Data(Double.toString(pathBusinesses.get(i).lattitude), pathBusinesses.get(i).longitude));
+        }
+
+        //XYChart.Data data3 = new XYChart.Data("10", 60/*, pathGraph*/);
+
+        //series.getData().add(data3);
+
+
+        pathGraph.getData().add(series);
+
+
+        System.out.println();
+
+
+
+
+    }
+
+
+    public double[] findBounds (ArrayList<YelpData> path){
+        double [] bounds = new double [4];
+        double lowerX = path.get(0).longitude;
+        double upperX = path.get(0).longitude;
+        double lowerY = path.get(0).lattitude;
+        double upperY = path.get(0).lattitude;
+
+
+
+        for (YelpData y : path) {
+            if (y.longitude<lowerX){
+                lowerX = y.longitude;
+            }
+            if (y.longitude>upperX){
+                upperX = y.longitude;
+            }
+            if (y.lattitude<lowerY){
+                lowerY = y.lattitude;
+            }
+            if (y.lattitude>upperY){
+                upperY = y.lattitude;
+            }
+        }
+        bounds[0]=lowerX;
+        bounds[1]=upperX;
+        bounds[2] = lowerY;
+        bounds[3]=upperY;
+        return bounds;
 
     }
 
