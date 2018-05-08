@@ -102,6 +102,7 @@ public class Controller {
         for ( int i = 0; i<pathTable.getItems().size(); i++) {
             pathTable.getItems().clear();
         }
+
         YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
         Node source = null;
         for (int i=0; i<g.getNumberOfElements(); i++){
@@ -134,6 +135,25 @@ public class Controller {
         }
 
         System.out.println();
+
+        ArrayList<YelpData> pathBusinesses = new ArrayList<YelpData>();
+        for (Node n: path){
+            pathBusinesses.add(n.yd);
+        }
+
+        ObservableList<YelpData> data = FXCollections.observableArrayList(pathBusinesses);
+        pathBusinessName.setCellValueFactory(new PropertyValueFactory<YelpData, String>("name"));
+        pathCity.setCellValueFactory(new PropertyValueFactory<YelpData, String>("city"));
+        pathLattitude.setCellValueFactory(new PropertyValueFactory<YelpData, String>("lattitude"));
+        pathLongitude.setCellValueFactory(new PropertyValueFactory<YelpData, String>("longitude"));
+        pathTable.getItems().addAll(data);
+
+        System.out.println();
+
+
+
+
+
 
     }
 
