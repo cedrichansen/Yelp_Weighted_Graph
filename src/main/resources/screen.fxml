@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.Button?>
@@ -48,10 +47,10 @@
       <Button fx:id="findPathButton" layoutX="29.0" layoutY="519.0" mnemonicParsing="false" onAction="#displayPath" prefHeight="27.0" prefWidth="501.0" text="Display Path" />
       <ScatterChart fx:id="pathGraph" layoutX="546.0" layoutY="230.0" prefHeight="513.0" prefWidth="635.0" title="Path graph">
         <xAxis>
-          <CategoryAxis label="longitude" side="BOTTOM" />
+          <NumberAxis forceZeroInRange="false" label="longitude" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis label="latitutde" side="LEFT" />
+          <NumberAxis forceZeroInRange="false" label="latitutde" side="LEFT" />
         </yAxis>
       </ScatterChart>
 

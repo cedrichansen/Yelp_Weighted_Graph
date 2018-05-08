@@ -78,6 +78,7 @@ public class Controller {
             spanningTreeTable.getItems().clear();
 
         }
+
         YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
         Node seeker = null;
         for (int i=0; i<g.getNumberOfElements(); i++){
@@ -157,37 +158,38 @@ public class Controller {
         pathLongitude.setCellValueFactory(new PropertyValueFactory<YelpData, String>("longitude"));
         pathTable.getItems().addAll(data);
 
-        System.out.println();
+
+        XYChart.Series pathSeries = new XYChart.Series();
+        pathSeries.setName("Businesses in path");
+        XYChart.Series treeSeries = new XYChart.Series();
+        treeSeries.setName("Spanning tree Businesses");
+        XYChart.Series src = new XYChart.Series();
+        src.setName("Source Business");
+        XYChart.Series dst = new XYChart.Series();
+        dst.setName("Destination Business");
 
 
-        double[] bounds = findBounds(pathBusinesses);
-
-
-
-
-
-       // NumberAxis xBounds= new NumberAxis(bounds[0], bounds[1], 0.0001);
-        //NumberAxis yBounds = new NumberAxis(bounds[2], bounds[3], 0.0001);
-
-        //pathGraph = new ScatterChart<Number, Number>(new NumberAxis(bounds[0], bounds[1], 0.0001), new NumberAxis(bounds[2], bounds[3], 0.0001));
-
-        System.out.println();
-
-
-        XYChart.Series series = new XYChart.Series();
-
-        XYChart.Data [] points = new XYChart.Data [path.size()];
-
-        for (int i = 0; i<points.length; i++){
-            series.getData().add(new XYChart.Data(Double.toString(pathBusinesses.get(i).lattitude), pathBusinesses.get(i).longitude));
+        for (int i = 0; i<path.size(); i++){
+            if (i==0){
+                src.getData().add(new XYChart.Data(pathBusinesses.get(i).lattitude, pathBusinesses.get(i).longitude));
+            } else if (i == path.size()-1){
+                dst.getData().add(new XYChart.Data(pathBusinesses.get(i).lattitude, pathBusinesses.get(i).longitude));
+            }
+            else {
+                pathSeries.getData().add(new XYChart.Data(pathBusinesses.get(i).lattitude, pathBusinesses.get(i).longitude));
+            }
         }
 
-        //XYChart.Data data3 = new XYChart.Data("10", 60/*, pathGraph*/);
+        ArrayList<YelpData> tree = getSpanningTree();
+        for (int i = 0; i< tree.size(); i++){
+            treeSeries.getData().add(new XYChart.Data(tree.get(i).lattitude, tree.get(i).longitude));
+        }
 
-        //series.getData().add(data3);
 
-
-        pathGraph.getData().add(series);
+        pathGraph.getData().add(treeSeries);
+        pathGraph.getData().add(pathSeries);
+        pathGraph.getData().add(src);
+        pathGraph.getData().add(dst);
 
 
         System.out.println();
@@ -198,35 +200,15 @@ public class Controller {
     }
 
 
-    public double[] findBounds (ArrayList<YelpData> path){
-        double [] bounds = new double [4];
-        double lowerX = path.get(0).longitude;
-        double upperX = path.get(0).longitude;
-        double lowerY = path.get(0).lattitude;
-        double upperY = path.get(0).lattitude;
 
-
-
-        for (YelpData y : path) {
-            if (y.longitude<lowerX){
-                lowerX = y.longitude;
-            }
-            if (y.longitude>upperX){
-                upperX = y.longitude;
-            }
-            if (y.lattitude<lowerY){
-                lowerY = y.lattitude;
-            }
-            if (y.lattitude>upperY){
-                upperY = y.lattitude;
+    ArrayList<YelpData> getSpanningTree(){
+        ArrayList<YelpData> tree = new ArrayList<YelpData>();
+        for (int i = 0; i<g.getNumberOfElements(); i++){
+            if (g.nodes[i].path.size()!=0){
+                tree.add(g.nodes[i].yd);
             }
         }
-        bounds[0]=lowerX;
-        bounds[1]=upperX;
-        bounds[2] = lowerY;
-        bounds[3]=upperY;
-        return bounds;
-
+        return tree;
     }
 
 
