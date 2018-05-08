@@ -1,14 +1,17 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-public class Node implements Comparable<Node> {
+public class Node implements Comparable {
 
     YelpData yd;
     Edge[] edges;
     static int totalNumNodes = 0;
     int IDNumber;
     double haversin;
-
+    double minDistance = Double.POSITIVE_INFINITY;
+    Node previous;
+    LinkedList<Node> path;
 
 
     public static class Edge{
@@ -25,7 +28,7 @@ public class Node implements Comparable<Node> {
         }
 
         public String toString(){
-            return "Dest Node ID:" + dest.IDNumber + " //////   Weight: " + weight;
+            return "Dest Node ID: " + dest.IDNumber + " //////   Weight: " + weight;
         }
     }
 
@@ -35,12 +38,26 @@ public class Node implements Comparable<Node> {
         IDNumber = totalNumNodes++;
         haversin = Double.MAX_VALUE;
         edges = new Edge[4];
+        path = new LinkedList<Node>();
 
     }
 
-    public int compareTo(Node other){
+    // this below is needed for assigning all the edges - which is currently never used because everything
+    // has already been written to file
+
+    /*public int compareTo(Node other){
         return (int)this.haversin - (int)other.haversin;
+    } */
+
+
+    //for comparing weights for dijkstras
+    @Override
+    public int compareTo(Object o) {
+        Node other = (Node)o;
+        return Double.compare(other.minDistance, this.minDistance);
     }
+
+
 
     void addEdge(Node n) {
 

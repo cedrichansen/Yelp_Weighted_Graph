@@ -9,11 +9,15 @@ public class Main {
 
 
         try {
-            Graph g = new Graph();
+            Graph graph = new Graph();
             //assignEdgesAndWriteNodes(g, NUM_BUSINESSES);
-            g.readAndCreateGraph();
+            graph.readAndCreateGraph();
             //g.writeAllEdgesFromLoadedGraph(NUM_BUSINESSES);
-            Object [] neighbours = g.nodes[10].getNeighbouringNodes().toArray();
+            graph.recoverEdges();
+
+
+            graph.shortestPath(graph.nodes[6]);
+            Node n = graph.nodes[136];
 
             System.out.println("\nGraph has been read!!!");
 
@@ -47,27 +51,6 @@ public class Main {
             g.write(g.nodes[i]);
             g.writeEdges(g.nodes[i]);
         }
-    }
-
-
-
-
-
-
-    public static ArrayList<Node> shortestPath (Node start, Node end) {
-
-        ArrayList<Node> path = new ArrayList<Node>();
-        ArrayList<Node> visited = new ArrayList<Node>();
-
-
-
-
-
-
-
-        return path;
-
-
     }
 
 

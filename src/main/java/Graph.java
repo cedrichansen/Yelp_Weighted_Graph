@@ -4,9 +4,7 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -16,8 +14,6 @@ import java.util.ArrayList;
 
 public class Graph {
     Node[] nodes;
-    Node start;
-    Node end;
     final static String NODE_FILE = "Nodes";
     final static String EDGE_FILE = "Edges";
     final static int NODESIZE = 512;
@@ -121,6 +117,50 @@ public class Graph {
         }
         return false;
     }
+
+    public void recoverEdges() throws IOException{
+        for (int i = 0; i<this.getNumberOfElements(); i++){
+            Node current = nodes[i];
+            System.out.println("Recovering neighbours for node " + i);
+            for (int j = 0; j<current.edges.length; j++){
+                current.edges[j].dest = this.nodes[current.edges[j].dest.IDNumber];
+            }
+        }
+    }
+
+
+    public void shortestPath (Node start /*, Node end*/) throws IOException {
+
+        PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
+        start.minDistance = 0;
+        unVisited.add(start);
+
+        while (!unVisited.isEmpty()) {
+
+            Node n = unVisited.poll();
+
+            for (Node.Edge neighbour: n.edges) {
+
+                Double newDistance = n.minDistance + neighbour.weight;
+
+                Node toLook = neighbour.dest;
+
+                if (toLook.minDistance > newDistance) {
+
+                    unVisited.remove(neighbour.dest);
+                    neighbour.dest.minDistance = newDistance;
+
+                    neighbour.dest.path = new LinkedList<Node>(n.path);
+                    neighbour.dest.path.add(n);
+
+                    unVisited.add(neighbour.dest);
+                }
+
+            }
+
+        }
+    }
+
 
     public void writeEdges(Node n) throws IOException{
         System.out.println("writing edges for " + n.toString());
