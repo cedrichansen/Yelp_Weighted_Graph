@@ -51,8 +51,8 @@ public class Graph {
 
     public int getIndexOfLastElement() {
         int finalIndex = 0;
-        for (int i=0; i< nodes.length; i++){
-            if (nodes[i] != null){
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] != null) {
                 finalIndex = i;
             }
         }
@@ -95,7 +95,7 @@ public class Graph {
                 }
             }
 
-            for (int j = 0; j < getNumberOfElements() -1; j++) {
+            for (int j = 0; j < getNumberOfElements() - 1; j++) {
                 Node otherNode = this.nodes[j];
                 if (i != j && !alreadyInClosest4(closest5, otherNode)) {
                     closest5[4] = otherNode;
@@ -130,11 +130,11 @@ public class Graph {
         return false;
     }
 
-    public void recoverEdges() throws IOException{
-        for (int i = 0; i<this.getNumberOfElements(); i++){
+    public void recoverEdges() throws IOException {
+        for (int i = 0; i < this.getNumberOfElements(); i++) {
             Node current = nodes[i];
             System.out.println("Recovering neighbours for node " + i);
-            for (int j = 0; j<current.edges.length; j++){
+            for (int j = 0; j < current.edges.length; j++) {
                 current.edges[j].dest = this.nodes[current.edges[j].dest.IDNumber];
             }
         }
@@ -142,7 +142,7 @@ public class Graph {
 
 
     public void shortestPathFrom(Node start /*, Node end*/) throws IOException {
-
+        System.out.println("Getting spanning tree for: " + start.yd.name + " --- ID: " + start.IDNumber);
         clearPaths();
         PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
         start.minDistance = 0;
@@ -151,8 +151,9 @@ public class Graph {
         while (!unVisited.isEmpty()) {
 
             Node n = unVisited.poll();
+            //System.out.println("Looking at " + n.yd);
 
-            for (Node.Edge neighbour: n.edges) {
+            for (Node.Edge neighbour : n.edges) {
 
                 Double newDistance = n.minDistance + neighbour.weight;
 
@@ -172,50 +173,52 @@ public class Graph {
         }
     }
 
-    public void clearPaths(){
-        for (int i = 0; i<getNumberOfElements(); i++){
-            if (this.nodes[i].path.size() != 0){
+    public void clearPaths() {
+        for (int i = 0; i < getNumberOfElements(); i++) {
+            if (this.nodes[i].path.size() != 0) {
                 this.nodes[i].path.clear();
             }
         }
     }
 
 
-    public int numberOfDisjointSets(Graph g, int uniqueSets)throws IOException{
-        uniqueSets++;
-        Node first = getFirstNode();
-        if (first == null){
+    public int numberOfDisjointSets(Graph g, int uniqueSets) throws IOException {
+        System.out.println("Working on disjoint sets..." + " Num Unique Sets: " + uniqueSets);
+        System.out.println("num elements in current graph: " + g.getNumberOfElements());
+
+        Node first = getFirstNode(g, uniqueSets);
+        if (first == null || g.getNumberOfElements()==0) {
             return uniqueSets;
         }
         shortestPathFrom(first);
         Graph smaller = new Graph();
-        for (int i = 0; i<g.getIndexOfLastElement(); i++){
-            if (g.nodes[i].path.size()==0){
-                smaller.add(g.nodes[i]);
+        for (int i = first.IDNumber; i < g.getIndexOfLastElement(); i++) {
+            if (g.nodes[i] != null) {
+                if (g.nodes[i].path.size() == 0) {
+                    smaller.add(g.nodes[i]);
+                }
             }
         }
+        uniqueSets++;
         return numberOfDisjointSets(smaller, uniqueSets);
 
     }
 
-    public Node getFirstNode(){
-        for (int i = 0; i<this.nodes.length; i++){
-            if (this.nodes!= null){
-                return this.nodes[i];
+    public Node getFirstNode(Graph g, int index) {
+        for (int i = index; i < g.nodes.length; i++) {
+            if (g.nodes[i] != null) {
+                return g.nodes[i];
             }
         }
         return null;
     }
 
 
-
-
-
-    public void writeEdges(Node n) throws IOException{
+    public void writeEdges(Node n) throws IOException {
         System.out.println("writing edges for " + n.toString());
 
         RandomAccessFile file = new RandomAccessFile(EDGE_FILE, "rw");
-        file.seek(n.IDNumber* EDGESIZE);
+        file.seek(n.IDNumber * EDGESIZE);
         FileChannel fc = file.getChannel();
         ByteBuffer bb = ByteBuffer.allocate(EDGESIZE);
 
@@ -233,8 +236,8 @@ public class Graph {
     }
 
 
-    public void writeAllEdgesFromLoadedGraph(int NUM_BUSINESSES) throws IOException{
-        for (int i = 0; i<NUM_BUSINESSES; i++){
+    public void writeAllEdgesFromLoadedGraph(int NUM_BUSINESSES) throws IOException {
+        for (int i = 0; i < NUM_BUSINESSES; i++) {
             this.writeEdges(this.nodes[i]);
         }
     }
@@ -243,7 +246,7 @@ public class Graph {
     public void write(Node n) throws IOException {
         try {
             RandomAccessFile file = new RandomAccessFile(NODE_FILE, "rw");
-            file.seek(n.IDNumber*NODESIZE);
+            file.seek(n.IDNumber * NODESIZE);
             FileChannel fc = file.getChannel();
             ByteBuffer bb = ByteBuffer.allocate(NODESIZE);
 
@@ -305,7 +308,7 @@ public class Graph {
 
     public static Node read(long location) throws IOException {
         try {
-            System.out.println("Reading Node: " + (int)location);
+            System.out.println("Reading Node: " + (int) location);
             Node n = new Node(null);
             RandomAccessFile file = new RandomAccessFile(NODE_FILE, "rw");
             file.seek(location * NODESIZE);
@@ -373,9 +376,9 @@ public class Graph {
     }
 
 
-    public void readAndCreateGraph() throws IOException{
-        for (int i=0; i<Main.NUM_BUSINESSES; i++){
-            this.nodes[i] = Graph.read((long)i);
+    public void readAndCreateGraph() throws IOException {
+        for (int i = 0; i < Main.NUM_BUSINESSES; i++) {
+            this.nodes[i] = Graph.read((long) i);
         }
     }
 

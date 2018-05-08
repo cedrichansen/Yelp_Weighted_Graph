@@ -15,14 +15,7 @@ public class Main {
             //g.writeAllEdgesFromLoadedGraph(NUM_BUSINESSES);
             graph.recoverEdges();
 
-
-            graph.shortestPathFrom(graph.nodes[6]);
-            Node n = graph.nodes[136];
-            Node m = graph.nodes[1000];
-            graph.shortestPathFrom(n);
-            m = graph.nodes[1000];
-
-            int numDisjoint = graph.numberOfDisjointSets(graph, 0);
+            //int numDisjoint = graph.numberOfDisjointSets(graph, 0);
 
 
 
