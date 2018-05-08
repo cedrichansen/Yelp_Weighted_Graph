@@ -114,7 +114,7 @@ public class Controller {
 
         test = new YelpData(null, spanningTreeTable.getSelectionModel().getSelectedItem().id, null, 0,0);
         Node dest = null;
-        for (int i=0; i<g.getNumberOfElements(); i++){
+        for (int i=0;  i<g.getNumberOfElements(); i++){
             if (g.nodes[i].yd.id.equals(test.id)){
                 dest = g.nodes[i];
                 break;
