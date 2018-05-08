@@ -156,18 +156,27 @@ public class Graph {
                     neighbour.dest.minDistance = newDistance;
 
                     //doing parent pointer stuff
+                    /*
+
                     toLook.parent = n;
+                    while (toLook.parent!=null){
+                        neighbour.dest.path.add(toLook.parent);
+                        toLook = toLook.parent;
+                    }
 
-                    ///
+                   */
+                    //
 
+///*
                     neighbour.dest.path = new LinkedList<Node>(n.path);
                     neighbour.dest.path.add(n);
-
+//*/
 
                     unVisited.add(neighbour.dest);
                 }
             }
         }
+        System.out.println("Done finding paths");
     }
 
     public ArrayList<Node> pathFromTo(Node src, Node dst)throws IOException{
