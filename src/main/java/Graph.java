@@ -131,6 +131,7 @@ public class Graph {
 
     public void shortestPath (Node start /*, Node end*/) throws IOException {
 
+        clearPaths();
         PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
         start.minDistance = 0;
         unVisited.add(start);
@@ -155,9 +156,16 @@ public class Graph {
 
                     unVisited.add(neighbour.dest);
                 }
+            }
+        }
+    }
+
+    public void clearPaths(){
+        for (int i = 0; i<getNumberOfElements(); i++){
+            if (this.nodes[i].path.size() != 0){
+                this.nodes[i].path.clear();
 
             }
-
         }
     }
 

@@ -18,6 +18,12 @@ public class Main {
 
             graph.shortestPath(graph.nodes[6]);
             Node n = graph.nodes[136];
+            Node m = graph.nodes[1000];
+
+            graph.shortestPath(n);
+
+            m = graph.nodes[1000];
+
 
             System.out.println("\nGraph has been read!!!");
 
