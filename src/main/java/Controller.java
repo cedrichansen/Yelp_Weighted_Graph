@@ -3,7 +3,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
@@ -93,7 +92,7 @@ public class Controller {
             }
         }
 
-        g.createSpanningTree(seeker);
+        g.Dijkstra(seeker);
         ArrayList<YelpData> spanningNodes = new ArrayList<YelpData>();
 
         for (int i=0; i<g.getNumberOfElements(); i++){
@@ -117,7 +116,7 @@ public class Controller {
         for ( int i = 0; i<pathTable.getItems().size(); i++) {
             pathTable.getItems().clear();
         }
-        pathGraph.getData().clear();
+        graphLineChart.getData().clear();
 
         YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
         Node source = null;
@@ -169,36 +168,23 @@ public class Controller {
         pathSeries.setName("Businesses in path");
         XYChart.Series treeSeries = new XYChart.Series();
         treeSeries.setName("Spanning tree Businesses");
-        XYChart.Series src = new XYChart.Series();
-        src.setName("Source Business");
-        XYChart.Series dst = new XYChart.Series();
-        dst.setName("Destination Business");
-
 
         for (int i = 0; i<path.size(); i++){
-            if (i==0){
-                src.getData().add(new XYChart.Data(pathBusinesses.get(i).longitude, pathBusinesses.get(i).lattitude));
-            } else if (i == path.size()-1){
-                dst.getData().add(new XYChart.Data(pathBusinesses.get(i).longitude, pathBusinesses.get(i).lattitude));
-            }
-            else {
                 pathSeries.getData().add(new XYChart.Data(pathBusinesses.get(i).longitude, pathBusinesses.get(i).lattitude));
-            }
         }
 
         ArrayList<YelpData> tree = getSpanningTree();
+        ArrayList<XYChart.Series> trees = new ArrayList<XYChart.Series>();
         for (int i = 0; i< tree.size(); i++){
-            treeSeries.getData().add(new XYChart.Data(tree.get(i).longitude, tree.get(i).lattitude));
+            XYChart.Series temp = new XYChart.Series();
+            temp.getData().add(new XYChart.Data(tree.get(i).longitude, tree.get(i).lattitude));
+            trees.add(temp);
         }
 
-        Line line = new Line(36.175, -115.280,36.190, -115.250);
-
-
-        pathGraph.getData().add(treeSeries);
-        pathGraph.getData().add(pathSeries);
-        pathGraph.getData().add(src);
-        pathGraph.getData().add(dst);
-
+        graphLineChart.getData().add(pathSeries);
+        for (int i = 0; i < trees.size(); i++){
+        graphLineChart.getData().add(trees.get(i));
+        }
 
         System.out.println();
 

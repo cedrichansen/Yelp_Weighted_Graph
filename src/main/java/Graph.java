@@ -133,7 +133,7 @@ public class Graph {
     }
 
 
-    public void createSpanningTree(Node start /*, Node end*/) throws IOException {
+    public void Dijkstra(Node start) throws IOException {
         System.out.println("Getting spanning tree for: " + start.yd.name + " --- ID: " + start.IDNumber);
         clearPaths();
         PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
@@ -166,7 +166,7 @@ public class Graph {
     }
 
     public ArrayList<Node> pathFromTo(Node src, Node dst)throws IOException{
-        createSpanningTree(src);
+        Dijkstra(src);
         for (int i = 0; i<this.getNumberOfElements(); i++){
             if (dst.path.size()!=0){
                 return new ArrayList<Node>(dst.path);
@@ -192,7 +192,7 @@ public class Graph {
         if (first == null || g.getNumberOfElements()==0) {
             return uniqueSets;
         }
-        createSpanningTree(first);
+        Dijkstra(first);
         Graph smaller = new Graph();
         for (int i = first.IDNumber; i < g.getIndexOfLastElement(); i++) {
             if (g.nodes[i] != null) {
