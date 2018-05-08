@@ -2,11 +2,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
 
@@ -64,6 +66,9 @@ public class Controller {
     @FXML
     ScatterChart<?,?> pathGraph;
 
+    @FXML
+    LineChart<?,?> graphLineChart;
+
 
 
 
@@ -112,6 +117,7 @@ public class Controller {
         for ( int i = 0; i<pathTable.getItems().size(); i++) {
             pathTable.getItems().clear();
         }
+        pathGraph.getData().clear();
 
         YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
         Node source = null;
@@ -171,19 +177,21 @@ public class Controller {
 
         for (int i = 0; i<path.size(); i++){
             if (i==0){
-                src.getData().add(new XYChart.Data(pathBusinesses.get(i).lattitude, pathBusinesses.get(i).longitude));
+                src.getData().add(new XYChart.Data(pathBusinesses.get(i).longitude, pathBusinesses.get(i).lattitude));
             } else if (i == path.size()-1){
-                dst.getData().add(new XYChart.Data(pathBusinesses.get(i).lattitude, pathBusinesses.get(i).longitude));
+                dst.getData().add(new XYChart.Data(pathBusinesses.get(i).longitude, pathBusinesses.get(i).lattitude));
             }
             else {
-                pathSeries.getData().add(new XYChart.Data(pathBusinesses.get(i).lattitude, pathBusinesses.get(i).longitude));
+                pathSeries.getData().add(new XYChart.Data(pathBusinesses.get(i).longitude, pathBusinesses.get(i).lattitude));
             }
         }
 
         ArrayList<YelpData> tree = getSpanningTree();
         for (int i = 0; i< tree.size(); i++){
-            treeSeries.getData().add(new XYChart.Data(tree.get(i).lattitude, tree.get(i).longitude));
+            treeSeries.getData().add(new XYChart.Data(tree.get(i).longitude, tree.get(i).lattitude));
         }
+
+        Line line = new Line(36.175, -115.280,36.190, -115.250);
 
 
         pathGraph.getData().add(treeSeries);
