@@ -156,7 +156,7 @@ public class Graph {
                     neighbour.dest.minDistance = newDistance;
 
                     //doing parent pointer stuff
-                    toLook.previous = n;
+                    toLook.parent = n;
 
                     ///
 

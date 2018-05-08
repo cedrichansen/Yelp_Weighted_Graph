@@ -95,6 +95,8 @@ public class Controller {
             }
         }
 
+
+
         ObservableList<YelpData> data = FXCollections.observableArrayList(spanningNodes);
         //spanningName.setCellValueFactory(new PropertyValueFactory<>("name"));
         spanningName.setCellValueFactory(new PropertyValueFactory<YelpData, String>("name"));

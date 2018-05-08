@@ -10,7 +10,7 @@ public class Node implements Comparable {
     int IDNumber;
     double haversin;
     double minDistance = Double.POSITIVE_INFINITY;
-    Node previous;
+    Node parent;
     LinkedList<Node> path;
 
 
