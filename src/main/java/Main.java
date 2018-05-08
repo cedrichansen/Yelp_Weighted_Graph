@@ -1,7 +1,13 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Main extends Application {
 
     final static int NUM_BUSINESSES = 10000;
 
@@ -22,6 +28,8 @@ public class Main {
             System.out.println("\nGraph has been read!!!");
 
 
+
+            launch(args);
 
 
         } catch (IOException e) {
@@ -51,6 +59,14 @@ public class Main {
             g.write(g.nodes[i]);
             g.writeEdges(g.nodes[i]);
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("screen.fxml"));
+        primaryStage.setTitle("CSC365 Hw03");
+        primaryStage.setScene(new Scene(root, 1200, 771));
+        primaryStage.show();
     }
 
 

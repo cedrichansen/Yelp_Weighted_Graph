@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="771.0" prefWidth="1200" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <children>
+        <Button fx:id="searchButton" onAction="#searchSpanningTree" layoutX="26.0" layoutY="364.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="1143.0" text="Find Spanning Tree">
+            <font>
+                <Font size="14.0" /></font>
+        </Button>
+        <Label layoutX="525.0" layoutY="14.0" prefHeight="44.0" prefWidth="150.0" text="BUSINESS LIST">
+            <font>
+                <Font name="System Bold" size="19.0" />
+            </font></Label>
+        <TableView fx:id="table" editable="true" layoutX="25.0" layoutY="60.0" prefHeight="292.0" prefWidth="1150.0" tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="businessName" minWidth="-Infinity" prefWidth="234.0" text="Business name" />
+                <TableColumn fx:id="city" prefWidth="129.0" text="City" />
+                <TableColumn fx:id="id" prefWidth="267.0" text="ID" />
+                <TableColumn fx:id="lattitude" prefWidth="157.0" text="Lattitude" />
+                <TableColumn fx:id="longitude" prefWidth="340.0" text="Longitude" />
+            </columns>
+        </TableView>
+        <TableView fx:id="spanningTreeTable" layoutX="25.0" layoutY="396.0" prefHeight="246.0" prefWidth="1150.0">
+            <columns>
+                <TableColumn fx:id="spanningName" prefWidth="150.0" text="Business name" />
+                <TableColumn fx:id="spanningCity" minWidth="0.0" prefWidth="457.0" text="City" />
+                <TableColumn fx:id="spanningLattitude" minWidth="0.0" prefWidth="168.0" text="Lattitude" />
+                <TableColumn fx:id="spanningLongitude" minWidth="0.0" prefWidth="374.0" text="Longitude" />
+            </columns>
+        </TableView>
+
+    </children>
+</AnchorPane>
