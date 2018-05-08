@@ -42,6 +42,24 @@ public class Controller {
     TableColumn <YelpData, String> spanningLattitude;
 
 
+    @FXML
+    TableView<YelpData> pathTable;
+
+    @FXML
+    TableColumn<YelpData, String> pathBusinessName;
+
+    @FXML
+    TableColumn<YelpData, String> pathCity;
+
+    @FXML
+    TableColumn<YelpData, String> pathLattitude;
+
+    @FXML
+    TableColumn<YelpData, String> pathLongitude;
+
+
+
+
 
 
 
@@ -60,7 +78,7 @@ public class Controller {
             }
         }
 
-        g.shortestPathFrom(seeker);
+        g.createSpanningTree(seeker);
         ArrayList<YelpData> spanningNodes = new ArrayList<YelpData>();
 
         for (int i=0; i<g.getNumberOfElements(); i++){
@@ -76,7 +94,47 @@ public class Controller {
         spanningLattitude.setCellValueFactory(new PropertyValueFactory<YelpData, String>("lattitude"));
         spanningLongitude.setCellValueFactory(new PropertyValueFactory<YelpData, String>("longitude"));
         spanningTreeTable.getItems().addAll(data);
-        
+
+    }
+
+
+    public void displayPath(ActionEvent event) throws Exception{
+        for ( int i = 0; i<pathTable.getItems().size(); i++) {
+            pathTable.getItems().clear();
+        }
+        YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
+        Node source = null;
+        for (int i=0; i<g.getNumberOfElements(); i++){
+            if (g.nodes[i].yd.id.equals(test.id)){
+                source = g.nodes[i];
+                break;
+            }
+        }
+
+        test = new YelpData(null, spanningTreeTable.getSelectionModel().getSelectedItem().id, null, 0,0);
+        Node dest = null;
+        for (int i=0; i<g.getNumberOfElements(); i++){
+            if (g.nodes[i].yd.id.equals(test.id)){
+                dest = g.nodes[i];
+                break;
+            }
+        }
+
+        ArrayList<Node> path = new ArrayList<Node>();
+        for (int i= 0; i<g.getNumberOfElements(); i++){
+            if (g.nodes[i] == dest){
+                path.addAll(g.nodes[i].path);
+            }
+        }
+
+        path.add(path.size(), dest);
+
+        for (Node n: path){
+            System.out.println(n);
+        }
+
+        System.out.println();
+
     }
 
 
@@ -88,7 +146,7 @@ public class Controller {
         graph.readAndCreateGraph();
         graph.recoverEdges();
         g = graph;
-        ArrayList<YelpData> b = new ArrayList<YelpData>() ;
+        ArrayList<YelpData> b = new ArrayList<YelpData>();
 
         for (int i =0; i<g.getNumberOfElements(); i++){
             b.add(g.nodes[i].yd);

@@ -13,28 +13,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-
-        try {
-            Graph graph = new Graph();
-            //assignEdgesAndWriteNodes(g, NUM_BUSINESSES);
-            graph.readAndCreateGraph();
-            //g.writeAllEdgesFromLoadedGraph(NUM_BUSINESSES);
-            graph.recoverEdges();
-
-            //int numDisjoint = graph.numberOfDisjointSets(graph, 0);
-
-
-
-            System.out.println("\nGraph has been read!!!");
-
-
-
             launch(args);
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 

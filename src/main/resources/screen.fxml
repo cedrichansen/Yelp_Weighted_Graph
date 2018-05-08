@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="771.0" prefWidth="1200" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <children>
-        <Button fx:id="searchButton" onAction="#searchSpanningTree" layoutX="26.0" layoutY="364.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="1143.0" text="Find Spanning Tree">
+        <Button fx:id="searchButton" layoutX="26.0" layoutY="364.0" mnemonicParsing="false" onAction="#searchSpanningTree" prefHeight="28.0" prefWidth="1143.0" text="Find Spanning Tree">
             <font>
                 <Font size="14.0" /></font>
         </Button>
@@ -34,6 +34,15 @@
                 <TableColumn fx:id="spanningLongitude" minWidth="0.0" prefWidth="374.0" text="Longitude" />
             </columns>
         </TableView>
+      <TableView fx:id="pathTable" layoutX="26.0" layoutY="649.0" prefHeight="108.0" prefWidth="501.0">
+        <columns>
+          <TableColumn fx:id="pathBusinessName" prefWidth="157.0" text="Business Name" />
+            <TableColumn fx:id="pathCity" prefWidth="75.0" text="City" />
+          <TableColumn fx:id="pathLattitude" prefWidth="128.0" text="Lattitude" />
+            <TableColumn fx:id="pathLongitude" prefWidth="138.0" text="Longitude" />
+        </columns>
+      </TableView>
+      <Button fx:id="findPathButton" layoutX="549.0" layoutY="657.0" mnemonicParsing="false" onAction="#displayPath" prefHeight="17.0" prefWidth="142.0" text="Display Path" />
 
     </children>
 </AnchorPane>

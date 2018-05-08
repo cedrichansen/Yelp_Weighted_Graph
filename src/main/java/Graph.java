@@ -1,17 +1,9 @@
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class Graph {
@@ -141,7 +133,7 @@ public class Graph {
     }
 
 
-    public void shortestPathFrom(Node start /*, Node end*/) throws IOException {
+    public void createSpanningTree(Node start /*, Node end*/) throws IOException {
         System.out.println("Getting spanning tree for: " + start.yd.name + " --- ID: " + start.IDNumber);
         clearPaths();
         PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
@@ -173,6 +165,16 @@ public class Graph {
         }
     }
 
+    public ArrayList<Node> pathFromTo(Node src, Node dst)throws IOException{
+        createSpanningTree(src);
+        for (int i = 0; i<this.getNumberOfElements(); i++){
+            if (dst.path.size()!=0){
+                return new ArrayList<Node>(dst.path);
+            }
+        }
+        return null;
+    }
+
     public void clearPaths() {
         for (int i = 0; i < getNumberOfElements(); i++) {
             if (this.nodes[i].path.size() != 0) {
@@ -190,7 +192,7 @@ public class Graph {
         if (first == null || g.getNumberOfElements()==0) {
             return uniqueSets;
         }
-        shortestPathFrom(first);
+        createSpanningTree(first);
         Graph smaller = new Graph();
         for (int i = first.IDNumber; i < g.getIndexOfLastElement(); i++) {
             if (g.nodes[i] != null) {
