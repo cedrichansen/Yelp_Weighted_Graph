@@ -11,7 +11,7 @@ public class YelpData implements Serializable{
     double similarity;
     ArrayList<String> categories;
     int hash,numCategories;
-
+    int location;
 
     public YelpData(String n, String i, String c , double la, double lo) {
             name = n;
@@ -23,6 +23,7 @@ public class YelpData implements Serializable{
             numCategories = 0;
             similarity = 999999;
             hash = Math.abs(id.hashCode());
+
     }
     /*
     public YelpData(){

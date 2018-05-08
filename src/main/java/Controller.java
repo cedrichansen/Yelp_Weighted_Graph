@@ -82,17 +82,11 @@ public class Controller {
             spanningTreeTable.getItems().clear();
 
         }
+        int location = table.getSelectionModel().getSelectedIndex();
+        Node selection = g.nodes[location];
+        g.Dijkstra(selection);
 
-        YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
-        Node seeker = null;
-        for (int i=0; i<g.getNumberOfElements(); i++){
-            if (g.nodes[i].yd.id.equals(test.id)){
-                seeker = g.nodes[i];
-                break;
-            }
-        }
 
-        g.Dijkstra(seeker);
         ArrayList<YelpData> spanningNodes = new ArrayList<YelpData>();
 
         for (int i=0; i<g.getNumberOfElements(); i++){
@@ -112,29 +106,22 @@ public class Controller {
     }
 
 
+
+
+
     public void displayPath(ActionEvent event) throws Exception{
         for ( int i = 0; i<pathTable.getItems().size(); i++) {
             pathTable.getItems().clear();
         }
         graphLineChart.getData().clear();
 
-        YelpData test = new YelpData(null, table.getSelectionModel().getSelectedItem().id, null, 0,0);
-        Node source = null;
-        for (int i=0; i<g.getNumberOfElements(); i++){
-            if (g.nodes[i].yd.id.equals(test.id)){
-                source = g.nodes[i];
-                break;
-            }
-        }
+        YelpData y = table.getSelectionModel().getSelectedItem();
+        int location =y.location;
+        Node source = g.nodes[location];
 
-        test = new YelpData(null, spanningTreeTable.getSelectionModel().getSelectedItem().id, null, 0,0);
-        Node dest = null;
-        for (int i=0;  i<g.getNumberOfElements(); i++){
-            if (g.nodes[i].yd.id.equals(test.id)){
-                dest = g.nodes[i];
-                break;
-            }
-        }
+
+        YelpData d = spanningTreeTable.getSelectionModel().getSelectedItem();
+        Node dest = g.nodes[d.location];
 
         ArrayList<Node> path = new ArrayList<Node>();
         for (int i= 0; i<g.getNumberOfElements(); i++){

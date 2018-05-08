@@ -143,7 +143,6 @@ public class Graph {
         while (!unVisited.isEmpty()) {
 
             Node n = unVisited.poll();
-            //System.out.println("Looking at " + n.yd);
 
             for (Node.Edge neighbour : n.edges) {
 
@@ -156,8 +155,14 @@ public class Graph {
                     unVisited.remove(neighbour.dest);
                     neighbour.dest.minDistance = newDistance;
 
+                    //doing parent pointer stuff
+                    toLook.previous = n;
+
+                    ///
+
                     neighbour.dest.path = new LinkedList<Node>(n.path);
                     neighbour.dest.path.add(n);
+
 
                     unVisited.add(neighbour.dest);
                 }
@@ -381,6 +386,7 @@ public class Graph {
     public void readAndCreateGraph() throws IOException {
         for (int i = 0; i < Main.NUM_BUSINESSES; i++) {
             this.nodes[i] = Graph.read((long) i);
+            this.nodes[i].yd.location = i;
         }
     }
 
