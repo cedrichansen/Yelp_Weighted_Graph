@@ -80,7 +80,6 @@ public class Controller {
 
         for ( int i = 0; i<spanningTreeTable.getItems().size(); i++) {
             spanningTreeTable.getItems().clear();
-
         }
         int location = table.getSelectionModel().getSelectedIndex();
         Node selection = g.nodes[location];

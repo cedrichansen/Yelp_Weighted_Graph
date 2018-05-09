@@ -142,37 +142,28 @@ public class Graph {
 
         while (!unVisited.isEmpty()) {
 
-            Node n = unVisited.poll();
+            Node current = unVisited.poll();
 
-            for (Node.Edge neighbour : n.edges) {
+            for (Node.Edge neighbour : current.edges) {
 
-                Double newDistance = n.minDistance + neighbour.weight;
+                Double newDistance = current.minDistance + neighbour.weight;
 
                 Node toLook = neighbour.dest;
 
                 if (toLook.minDistance > newDistance) {
 
-                    unVisited.remove(neighbour.dest);
-                    neighbour.dest.minDistance = newDistance;
+                    Node searchingNode = neighbour.dest;
 
-                    //doing parent pointer stuff
-                    /*
+                    unVisited.remove(searchingNode);
+                    searchingNode.minDistance = newDistance;
 
-                    toLook.parent = n;
-                    while (toLook.parent!=null){
-                        neighbour.dest.path.add(toLook.parent);
-                        toLook = toLook.parent;
-                    }
-
-                   */
-                    //
-
-///*
-                    neighbour.dest.path = new LinkedList<Node>(n.path);
-                    neighbour.dest.path.add(n);
-//*/
-
-                    unVisited.add(neighbour.dest);
+                    ///*
+                    //searchingNode.path = new LinkedList<Node>(current.path);
+                    searchingNode.path.clear();
+                    searchingNode.path.addAll(current.path);
+                    searchingNode.path.add(current);
+                    toLook.parent = current;
+                    unVisited.add(searchingNode);
                 }
             }
         }
