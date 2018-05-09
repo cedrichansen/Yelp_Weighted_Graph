@@ -125,23 +125,28 @@ public class Controller {
         Node dest = g.nodes[d.location];
 
         ArrayList<Node> path = new ArrayList<Node>();
-        for (int i= 0; i<g.getNumberOfElements(); i++){
+        /*for (int i= 0; i<g.getNumberOfElements(); i++){
             if (g.nodes[i] == dest){
                 path.addAll(g.nodes[i].path);
             }
-        }
-
+        }*/
         path.add(path.size(), dest);
 
-        for (Node n: path){
-            System.out.println(n);
+        Node tempN = dest.parent;
+        while(tempN!=null){
+            path.add(tempN);
+            tempN = tempN.parent;
         }
 
-        System.out.println();
+
+        for (int i = path.size()-1; i>-1; --i){
+            System.out.println(path.get(i).yd);
+        }
+
 
         ArrayList<YelpData> pathBusinesses = new ArrayList<YelpData>();
-        for (Node n: path){
-            pathBusinesses.add(n.yd);
+        for (int i = path.size()-1; i>-1; --i){
+            pathBusinesses.add(path.get(i).yd);
         }
 
         ObservableList<YelpData> data = FXCollections.observableArrayList(pathBusinesses);

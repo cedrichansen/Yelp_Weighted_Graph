@@ -45,7 +45,7 @@
         </columns>
       </TableView>
       <Button fx:id="findPathButton" layoutX="29.0" layoutY="519.0" mnemonicParsing="false" onAction="#displayPath" prefHeight="27.0" prefWidth="501.0" text="Display Path" />
-      <LineChart fx:id="graphLineChart" layoutX="541.0" layoutY="230.0" legendVisible="false" prefHeight="532.0" prefWidth="651.0" title="Path Graph (w/Lines)">
+      <LineChart fx:id="graphLineChart" layoutX="541.0" layoutY="230.0" legendVisible="false" prefHeight="532.0" prefWidth="627.0" title="Path Graph">
         <xAxis>
           <NumberAxis forceZeroInRange="false" label="Longitude" side="BOTTOM" />
         </xAxis>
