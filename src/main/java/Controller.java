@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Line;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
@@ -81,10 +82,9 @@ public class Controller {
         for ( int i = 0; i<spanningTreeTable.getItems().size(); i++) {
             spanningTreeTable.getItems().clear();
         }
-        int location = table.getSelectionModel().getSelectedIndex();
+        int location = table.getSelectionModel().getSelectedItem().location;
         Node selection = g.nodes[location];
         g.Dijkstra(selection);
-
 
         ArrayList<YelpData> spanningNodes = new ArrayList<YelpData>();
 
@@ -125,22 +125,12 @@ public class Controller {
         Node dest = g.nodes[d.location];
 
         ArrayList<Node> path = new ArrayList<Node>();
-        /*for (int i= 0; i<g.getNumberOfElements(); i++){
-            if (g.nodes[i] == dest){
-                path.addAll(g.nodes[i].path);
-            }
-        }*/
         path.add(path.size(), dest);
 
         Node tempN = dest.parent;
         while(tempN!=null){
             path.add(tempN);
             tempN = tempN.parent;
-        }
-
-
-        for (int i = path.size()-1; i>-1; --i){
-            System.out.println(path.get(i).yd);
         }
 
 
@@ -197,7 +187,6 @@ public class Controller {
         }
         return tree;
     }
-
 
 
 

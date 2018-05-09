@@ -12,6 +12,7 @@ public class Node implements Comparable {
     double minDistance = Double.POSITIVE_INFINITY;
     Node parent;
     LinkedList<Node> path;
+    ArrayList<Node> reachableNodes;
 
 
     public static class Edge{
@@ -39,12 +40,10 @@ public class Node implements Comparable {
         haversin = Double.MAX_VALUE;
         edges = new Edge[4];
         path = new LinkedList<Node>();
-
     }
 
     // this below is needed for assigning all the edges - which is currently never used because everything
     // has already been written to file
-
     /*public int compareTo(Node other){
         return (int)this.haversin - (int)other.haversin;
     } */
@@ -85,6 +84,7 @@ public class Node implements Comparable {
         return distance;
     }
 
+    // Haversine formula
     static double getDistanceToOtherNode(double startLat, double startLong, double endLat, double endLong) {
         final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
 

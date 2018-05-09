@@ -14,7 +14,7 @@ public class Graph {
     final static int EDGESIZE = 32;
 
     public Graph() {
-        nodes = new Node[200000];
+        nodes = new Node[10000];
     }
 
     public boolean add(Node n) {
@@ -52,17 +52,7 @@ public class Graph {
     }
 
 
-
-
-
-
-
-    /*
-    *
-    * Goes through all nodes and looks to find the other 4 closest nodes and adds them as edges
-    *
-     */
-
+    //Look at all nodes, and find the 4 closest other nodes. Sets those as neighbours
     public void AssignEdges() {
         for (int i = 0; i < getNumberOfElements(); i++) {
 
@@ -105,6 +95,7 @@ public class Graph {
         }
     }
 
+    // helper function for Assign Edges
     public Node[] removeLastElement(Node[] small, Node[] big) {
         for (int i = 0; i < small.length; i++) {
             small[i] = big[i];
@@ -112,6 +103,7 @@ public class Graph {
         return small;
     }
 
+    //helped function for Assign Edges
     public boolean alreadyInClosest4(Node[] n, Node d) {
 
         for (int i = 0; i < n.length; i++) {
@@ -122,6 +114,8 @@ public class Graph {
         return false;
     }
 
+    // Goes through graph that was created from the NODES file, and basically adds pointers to the correct node
+    // in the graph (as the neighbours)
     public void recoverEdges() throws IOException {
         for (int i = 0; i < this.getNumberOfElements(); i++) {
             Node current = nodes[i];
@@ -133,41 +127,40 @@ public class Graph {
     }
 
 
+    // From a given source, find all reachable nodes, and in doing so, record the path from the source to the current node
     public void Dijkstra(Node start) throws IOException {
         System.out.println("Getting spanning tree for: " + start.yd.name + " --- ID: " + start.IDNumber);
-        clearPaths();
-        PriorityQueue<Node> unVisited = new PriorityQueue<Node>();
-        start.minDistance = 0;
-        unVisited.add(start);
+        clearPaths(); // clear existing paths
+        PriorityQueue<Node> unVisited = new PriorityQueue<Node>(); // create priority queue based on distance
+        start.minDistance = 0; //assign the start node to have 0 distance
+        unVisited.add(start); // add start node to Pqueue
 
         while (!unVisited.isEmpty()) {
-
+            //get the best available node from PQ of univisted nodes
             Node current = unVisited.poll();
 
+            //look through all edges of the current node
             for (Node.Edge neighbour : current.edges) {
 
+                //check to see if neighbour path is closer than existing path
                 Double newDistance = current.minDistance + neighbour.weight;
 
+                //just assign neighbour.dest to a new Node (a bit more readable)
                 Node toLook = neighbour.dest;
 
+                // if new distance is better...
                 if (toLook.minDistance > newDistance) {
-
-                    Node searchingNode = neighbour.dest;
-
+                    Node searchingNode = neighbour.dest; //go to appropriate node
                     unVisited.remove(searchingNode);
-                    searchingNode.minDistance = newDistance;
-
-                    ///*
-                    //searchingNode.path = new LinkedList<Node>(current.path);
-                    searchingNode.path.clear();
-                    searchingNode.path.addAll(current.path);
-                    searchingNode.path.add(current);
-                    toLook.parent = current;
+                    searchingNode.minDistance = newDistance; //update new distance
+                    searchingNode.path.clear(); //clear path of searchingNode
+                    searchingNode.path.addAll(current.path); //update path of searchingNode to be the path of currentNode
+                    searchingNode.path.add(current); //add current node to the path so path is accurate
+                    toLook.parent = current; //assign the parent (makes a few other functions easier/more efficient)
                     unVisited.add(searchingNode);
                 }
             }
         }
-        System.out.println("Done finding paths");
     }
 
     public ArrayList<Node> pathFromTo(Node src, Node dst)throws IOException{
@@ -188,7 +181,8 @@ public class Graph {
         }
     }
 
-
+    // Is currently not being called, but basically figures out number of disjoint spanning trees in the graph
+    // kind of hacky given a directed graph
     public int numberOfDisjointSets(Graph g, int uniqueSets) throws IOException {
         System.out.println("Working on disjoint sets..." + " Num Unique Sets: " + uniqueSets);
         System.out.println("num elements in current graph: " + g.getNumberOfElements());
@@ -211,6 +205,7 @@ public class Graph {
 
     }
 
+    // helper function for number of disjoint sets
     public Node getFirstNode(Graph g, int index) {
         for (int i = index; i < g.nodes.length; i++) {
             if (g.nodes[i] != null) {
@@ -221,6 +216,7 @@ public class Graph {
     }
 
 
+    //write an Edge to the EDGES file
     public void writeEdges(Node n) throws IOException {
         System.out.println("writing edges for " + n.toString());
 
@@ -242,7 +238,7 @@ public class Graph {
 
     }
 
-
+    // writes all of the edges from the loaded graph, into the EDGES File
     public void writeAllEdgesFromLoadedGraph(int NUM_BUSINESSES) throws IOException {
         for (int i = 0; i < NUM_BUSINESSES; i++) {
             this.writeEdges(this.nodes[i]);
@@ -250,6 +246,7 @@ public class Graph {
     }
 
 
+    //Writes a Node to the NODES FIle, retaining pertinent information
     public void write(Node n) throws IOException {
         try {
             RandomAccessFile file = new RandomAccessFile(NODE_FILE, "rw");
@@ -313,6 +310,7 @@ public class Graph {
     }
 
 
+    //recover a node (location is the ID number- used as a multiplier to look through the file)
     public static Node read(long location) throws IOException {
         try {
             System.out.println("Reading Node: " + (int) location);
@@ -383,6 +381,7 @@ public class Graph {
     }
 
 
+    //read all nodes, and create a graph where the neighbours points to empty nodes which contain ID's
     public void readAndCreateGraph() throws IOException {
         for (int i = 0; i < Main.NUM_BUSINESSES; i++) {
             this.nodes[i] = Graph.read((long) i);
