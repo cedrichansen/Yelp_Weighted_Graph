@@ -12,7 +12,6 @@ public class Node implements Comparable {
     double minDistance = Double.POSITIVE_INFINITY;
     Node parent;
     LinkedList<Node> path;
-    ArrayList<Node> reachableNodes;
 
 
     public static class Edge{

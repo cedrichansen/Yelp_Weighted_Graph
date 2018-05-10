@@ -14,13 +14,7 @@ import java.util.ArrayList;
 
 public class Controller {
 
-    Means means;
-
     private ArrayList<YelpData> list;
-    @FXML
-    private Button searchButton;
-    @FXML
-    private TextField searchField;
     Graph g;
     @FXML
     TableView<YelpData> table;
@@ -62,19 +56,8 @@ public class Controller {
     @FXML
     TableColumn<YelpData, String> pathLongitude;
 
-
-    @FXML
-    ScatterChart<?,?> pathGraph;
-
     @FXML
     LineChart<?,?> graphLineChart;
-
-
-
-
-
-
-
 
 
     public void searchSpanningTree(ActionEvent event) throws Exception {
@@ -88,6 +71,7 @@ public class Controller {
 
         ArrayList<YelpData> spanningNodes = new ArrayList<YelpData>();
 
+
         for (int i=0; i<g.getNumberOfElements(); i++){
             if (g.nodes[i].path.size()!=0){
                 spanningNodes.add(g.nodes[i].yd);
@@ -97,7 +81,6 @@ public class Controller {
 
 
         ObservableList<YelpData> data = FXCollections.observableArrayList(spanningNodes);
-        //spanningName.setCellValueFactory(new PropertyValueFactory<>("name"));
         spanningName.setCellValueFactory(new PropertyValueFactory<YelpData, String>("name"));
         spanningCity.setCellValueFactory(new PropertyValueFactory<YelpData, String>("city"));
         spanningLattitude.setCellValueFactory(new PropertyValueFactory<YelpData, String>("lattitude"));
@@ -171,11 +154,7 @@ public class Controller {
 
         System.out.println();
 
-
-
-
     }
-
 
 
     ArrayList<YelpData> getSpanningTree(){
@@ -187,7 +166,6 @@ public class Controller {
         }
         return tree;
     }
-
 
 
     public void initialize() throws Exception{
@@ -227,7 +205,6 @@ public class Controller {
         System.out.println();
 
     }
-
 
 
 }
