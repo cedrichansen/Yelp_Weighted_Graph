@@ -79,7 +79,7 @@ public class YelpData implements Serializable{
     }
 
 
-    public int hashify(HashTable ht){
+    /*public int hashify(HashTable ht){
         int size = ht.table.length;
 
         int hash = 7;
@@ -90,7 +90,7 @@ public class YelpData implements Serializable{
 
         return Math.abs(hash) & (size-1);
         //return Math.abs(hash) % (size);
-    }
+    }*/
 
     //establish similarity between this data point and other data points
     public double getSimilarity(YelpData y){
